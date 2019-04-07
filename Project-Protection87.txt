@@ -1,0 +1,2848 @@
+<!DOCTYPE html>
+
+<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+<div class="fullscreen nopadding">
+  <div id="header">
+    <img src="https://i.imgur.com/2rX9gSQ.jpg" width="75px" />
+  </div>
+  <div class="header">
+    <h1><font face="Lora" size="25">Project Protection</font></h1>
+  </div>
+</div>
+
+<div class="white">
+  <a id="test"></a>
+  <h2><font face="Lora" size="6">An Interactive Map of Diseases in the USA</font></h2>
+  <img class="floatleft" src="https://i.imgur.com/vz0muN2.jpg
+" alt=" " style="width: 100%;max-height: 100%"/>
+  <p></p>
+</div>
+
+<div class="semitrans">
+  <p></p>
+  <h2>Tips To Prevent Specific Diseases</h2>
+  <h4>Arthritis</h4>
+   The CDC recommends to join a self management program, be active, maintain a healthy weight, protect your joints, and talk with a doctor to manage arthritis pain. Find more information at <a href="https://www.cdc.gov/chronicdisease/resources/publications/factsheets/arthritis.htm">https://www.cdc.gov/chronicdisease/resources/publications/factsheets/arthritis.htm</a>
+  <h4> Asthma </h4>
+  Although asthma can be controlled, you cannot prevent it. To control asthma, take medicine and avoid the triggers that can cause an attack. You should also remove the triggers in your environment that can make your asthma worse. Find more information on how to control asthma at <a href="https://www.cdc.gov/asthma/faqs.htm">https://www.cdc.gov/asthma/faqs.htm</a>
+  <h4> Cancer </h4>
+  To prevent getting any form of cancer, the CDC recommends getting screened for different types of cancer, vaccinated, and making healthy choices. For more information visit <a href="https://www.cdc.gov/cancer/index.htm">https://www.cdc.gov/cancer/index.htm</a>
+  <h4> Cardiovascular Disease </h4>
+  According to the CDC, coronary artery disease (CAD) is the most common form of heart disease in the US. Lifestyle changes and, sometimes, medication, can greatly reduce the risk for CAD. Find more information about cardiovascular diseases at <a href="https://www.cdc.gov/heartdisease/index.htm">https://www.cdc.gov/heartdisease/index.htm</a>
+  <h4> Diabetes </h4>
+  Because Diabetes 1 is hereditary, it can not be prevented, but Diabetes 2 can be prevented. By losing a small amount of weight, if you are overweight, and getting physical activity, you can decrease your chance of developing Diabetes 2. There is also a program run by the CDC to prevent Diabetes 2, which you can find more information about at <a href="https://www.cdc.gov/diabetes/prevention">https://www.cdc.gov/diabetes/prevention</a>
+  <h2>Interactive Map</h2>
+  <p>Mouse over a certain region to find the prevalance of immunization in that area.</p>
+  <!DOCTYPE html>
+<html>
+<head>
+<!--MAGNIFYING GLASS-->
+<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+<title>Page Title</title>
+
+</head>
+<body>
+
+<style>
+@import url('https://fonts.googleapis.com/css family=Pacifico');
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {box-sizing: border-box;}
+
+.img-magnifier-container {
+  position:relative;
+}
+
+.img-magnifier-glass {
+  position: absolute;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: none;
+  /*Set the size of the magnifier glass:*/
+  width: 200px;
+  height: 200px;
+}
+img{
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+</style>
+<script>
+function magnify(imgID, zoom) {
+  var img, glass, w, h, bw;
+  img = document.getElementById(imgID);
+  /*create magnifier glass:*/
+  glass = document.createElement("DIV");
+  glass.setAttribute("class", "img-magnifier-glass");
+  /*insert magnifier glass:*/
+  img.parentElement.insertBefore(glass, img);
+  /*set background properties for the magnifier glass:*/
+  glass.style.backgroundImage = "url('" + img.src + "')";
+  glass.style.backgroundRepeat = "no-repeat";
+  glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+  bw = 3;
+  w = glass.offsetWidth / 2;
+  h = glass.offsetHeight / 2;
+  /*execute a function when someone moves the magnifier glass over the image:*/
+  glass.addEventListener("mousemove", moveMagnifier);
+  img.addEventListener("mousemove", moveMagnifier);
+  /*and also for touch screens:*/
+  glass.addEventListener("touchmove", moveMagnifier);
+  img.addEventListener("touchmove", moveMagnifier);
+  function moveMagnifier(e) {
+    var pos, x, y;
+    /*prevent any other actions that may occur when moving over the image*/
+    e.preventDefault();
+    /*get the cursor's x and y positions:*/
+    pos = getCursorPos(e);
+    x = pos.x;
+    y = pos.y;
+    /*prevent the magnifier glass from being positioned outside the image:*/
+    if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
+    if (x < w / zoom) {x = w / zoom;}
+    if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
+    if (y < h / zoom) {y = h / zoom;}
+    /*set the position of the magnifier glass:*/
+    glass.style.left = (x - w) + "px";
+    glass.style.top = (y - h) + "px";
+    /*display what the magnifier glass "sees":*/
+    glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+  }
+  function getCursorPos(e) {
+    var a, x = 0, y = 0;
+    e = e || window.event;
+    /*get the x and y positions of the image:*/
+    a = img.getBoundingClientRect();
+    /*calculate the cursor's x and y coordinates, relative to the image:*/
+    x = e.pageX - a.left;
+    y = e.pageY - a.top;
+    /*consider any page scrolling:*/
+    x = x - window.pageXOffset;
+    y = y - window.pageYOffset;
+    return {x : x, y : y};
+  }
+}
+
+</script>
+</head>
+<body>
+
+<div class="img-magnifier-container">
+  <img id="myimage" src="https://i.imgur.com/MHiSoJe.jpg" width = 980 height = 560>
+</div>
+
+<script>
+/* Initiate Magnify Function
+with the id of the image, and the strength of the magnifier glass:*/
+magnify("myimage", 2);
+</script>
+
+<!-----------------------------------------------------------------------------------------------------------------------------------------------------AL--------------------------->
+<!DOCTYPE html>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+/*  text-align: center; */
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 500;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -1000px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: 1000px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<!-- <body style="text-align:center;">-->
+
+<br><br><br><br><div class="tooltip">AL
+  <span class="tooltiptext">Arthritis - 41.5%
+  Asthma - 39.5%
+  Cancer - 76.5%
+  Cardiovascular Disease - 53.9%
+  Diabetes - 50.3%</span>
+</div>
+
+</body>
+</html>
+<!--AZ--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">AZ
+  <span class="tooltiptext">Arthritis - 36.7%
+  Asthma - 43.1%
+  Cancer - 65.4%
+  Cardiovascular Disease - 52%
+  Diabetes - 43.3%</span>
+</div>
+
+</body>
+</html>
+<!--AR--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">AR
+  <span class="tooltiptext">Arthritis - 45.8%
+  Asthma - 43.2%
+  Cancer - 67.6%
+  Cardiovascular Disease - 57.3%
+  Diabetes - 42.1%</span>
+</div>
+
+</body>
+</html>
+<!--CA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">CA
+  <span class="tooltiptext">Arthritis - 29.4%
+  Asthma - 39.8%
+  Cancer - 77.8%
+  Cardiovascular Disease - 53.4%
+  Diabetes - 42.6%</span>
+</div>
+
+</body>
+</html>
+<!--CO--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">CO
+  <span class="tooltiptext">Arthritis - 32%
+  Asthma - 42%
+  Cancer - 71%
+  Cardiovascular Disease - 60.3%
+  Diabetes - 44%</span>
+</div>
+
+</body>
+</html>
+<!--CT--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">CT
+  <span class="tooltiptext">Arthritis - 25.1%
+  Asthma - 51.1%
+  Cancer - 75.7%
+  Cardiovascular Disease - 59.1%
+  Diabetes - 44.8%</span>
+</div>
+
+</body>
+</html>
+<!--DE--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">DE
+  <span class="tooltiptext">Arthritis - 34.2%
+  Asthma - 41.8%
+  Cancer - 77.3%
+  Cardiovascular Disease - 57%
+  Diabetes - 54.1%</span>
+</div>
+
+</body>
+</html>
+<!--FL--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">FL
+  <span class="tooltiptext">Arthritis - 36.2%
+  Asthma - 43.2%
+  Cancer - 72.6%
+  Cardiovascular Disease - 52%
+  Diabetes - 41.2%</span>
+</div>
+
+</body>
+</html>
+<!--GA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">GA
+  <span class="tooltiptext">Arthritis - 36.8%
+  Asthma - 41.4%
+  Cancer - 71.1%
+  Cardiovascular Disease - 58%
+  Diabetes - 42.5%</span>
+</div>
+
+</body>
+</html>
+<!--ID--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">ID
+  <span class="tooltiptext">Arthritis - 32%
+  Asthma - 37.4%
+  Cancer - 62.3%
+  Cardiovascular Disease - 49.9%
+  Diabetes - 41.5%</span>
+</div>
+
+</body>
+</html>
+<!--IL--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">IL
+  <span class="tooltiptext">Arthritis - 34%
+  Asthma - 37.3%
+  Cancer - 73.2%
+  Cardiovascular Disease - 58.3%
+  Diabetes - 41.8%</span>
+</div>
+
+</body>
+</html>
+<!--IN--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">IN
+  <span class="tooltiptext">Arthritis - 36.4%
+  Asthma - 41.4%
+  Cancer - 67.9%
+  Cardiovascular Disease - 51.6%
+  Diabetes - 43%</span>
+</div>
+
+</body>
+</html>
+<!--IA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">IA
+  <span class="tooltiptext">Arthritis - 32.9%
+  Asthma - 46.8%
+  Cancer - 73.4%
+  Cardiovascular Disease - 60.9%
+  Diabetes - 47.9%</span>
+</div>
+
+</body>
+</html>
+<!--KS--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">KS
+  <span class="tooltiptext">Arthritis - 34.1%
+  Asthma - 41.2%
+  Cancer - 68.4%
+  Cardiovascular Disease - 55.8%
+  Diabetes - 43.2%</span>
+</div>
+
+</body>
+</html>
+<!--KY--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">KY
+  <span class="tooltiptext">Arthritis - 43.5%
+  Asthma - 42.2%
+  Cancer - 75%
+  Cardiovascular Disease - 56.1%
+  Diabetes - 47.4%</span>
+</div>
+
+</body>
+</html>
+<!--LA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">LA
+  <span class="tooltiptext">Arthritis - 38.3%
+  Asthma - 40.5%
+  Cancer - 72.9%
+  Cardiovascular Disease - 54%
+  Diabetes - 49.3%</span>
+</div>
+
+</body>
+</html>
+<!--ME--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">ME
+  <span class="tooltiptext">Arthritis - 37.8%
+  Asthma - 48.4%
+  Cancer - 77.9%
+  Cardiovascular Disease - 30.5%
+  Diabetes - 50.8%</span>
+</div>
+
+</body>
+</html>
+<!--MD--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MD
+  <span class="tooltiptext">Arthritis - 31%
+  Asthma - 43%
+  Cancer - 72.4%
+  Cardiovascular Disease - 59.9%
+  Diabetes - 45.1%</span>
+</div>
+
+</body>
+</html>
+<!--MA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MA
+  <span class="tooltiptext">Arthritis - 34.5%
+  Asthma - 44.1%
+  Cancer - 78.4%
+  Cardiovascular Disease - 53%
+  Diabetes - 51.9%</span>
+</div>
+
+</body>
+</html>
+<!--MI--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MI
+  <span class="tooltiptext">Arthritis - 38.9%
+  Asthma - 41.8%
+  Cancer - 72.4%
+  Cardiovascular Disease - 55.6%
+  Diabetes - 45.1%</span>
+</div>
+
+</body>
+</html>
+<!--MN--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MN
+  <span class="tooltiptext">Arthritis - 29.5%
+  Asthma - 43%
+  Cancer - 73.2%
+  Cardiovascular Disease - 60.8%
+  Diabetes - 45.6%</span>
+</div>
+
+</body>
+</html>
+<!--MS--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MS
+  <span class="tooltiptext">Arthritis - 40.7%
+  Asthma - 39.2%
+  Cancer - 71.2%
+  Cardiovascular Disease - 53.3%
+  Diabetes - 50.4%</span>
+</div>
+
+</body>
+</html>
+<!--MO--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MO
+  <span class="tooltiptext">Arthritis - 38.1%
+  Asthma - 44.4%
+  Cancer - 70.7%
+  Cardiovascular Disease - 60.9%
+  Diabetes - 47.4%</span>
+</div>
+
+</body>
+</html>
+<!--MT--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">MT
+  <span class="tooltiptext">Arthritis - 37.8%
+  Asthma - 47.4%
+  Cancer - 69.1%
+  Cardiovascular Disease - 62.6%
+  Diabetes - 52.9%</span>
+</div>
+
+</body>
+</html>
+<!--NE--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NE
+  <span class="tooltiptext">Arthritis - 34.9%
+  Asthma - 43.7%
+  Cancer - 67.3%
+  Cardiovascular Disease - 58.8%
+  Diabetes - 45.7%</span>
+</div>
+
+</body>
+</html>
+<!--NV--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NV
+  <span class="tooltiptext">Arthritis - 33.8%
+  Asthma - 31.5%
+  Cancer - 67.7%
+  Cardiovascular Disease - 56.4%
+  Diabetes - 38.8%</span>
+</div>
+
+</body>
+</html>
+<!--NH--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NH
+  <span class="tooltiptext">Arthritis - 34.4%
+  Asthma - 51%
+  Cancer - 75.8%
+  Cardiovascular Disease - 67.4%
+  Diabetes - 51%</span>
+</div>
+
+</body>
+</html>
+<!--NJ--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NJ
+  <span class="tooltiptext">Arthritis - 33.9%
+  Asthma - 35.7%
+  Cancer - 74.8%
+  Cardiovascular Disease - 58.6%
+  Diabetes - 51.6%</span>
+</div>
+
+</body>
+</html>
+<!--NM--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NM
+  <span class="tooltiptext">Arthritis - 34.9%
+  Asthma - 42.9%
+  Cancer - 67.9%
+  Cardiovascular Disease - 57.8%
+  Diabetes - 43.4%</span>
+</div>
+
+</body>
+</html>
+<!--NY--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NY
+  <span class="tooltiptext">Arthritis - 36.9%
+  Asthma - 39.2%
+  Cancer - 73.2%
+  Cardiovascular Disease - 56.4%
+  Diabetes - 44.4%</span>
+</div>
+
+</body>
+</html>
+
+<!--NC--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">NC
+  <span class="tooltiptext">Arthritis - 35.4%
+  Asthma - 42%
+  Cancer - 75.7%
+  Cardiovascular Disease - 56.6%
+  Diabetes - 46.1%</span>
+</div>
+
+</body>
+</html>
+<!--ND--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">ND
+  <span class="tooltiptext">Arthritis - 35.1%
+  Asthma - 56.2%
+  Cancer - 69.7%
+  Cardiovascular Disease - 58.9%
+  Diabetes - 47.3%</span>
+</div>
+
+</body>
+</html>
+<!--OH--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">OH
+  <span class="tooltiptext">Arthritis - 37.3%
+  Asthma - 41.3%
+  Cancer - 73.7%
+  Cardiovascular Disease - 57.5%
+  Diabetes - 53.4%</span>
+</div>
+
+</body>
+</html>
+</span>
+</div>
+
+</body>
+</html>  
+<!--OK--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">OK
+  <span class="tooltiptext">Arthritis - 39.4%
+  Asthma - 44.3%
+  Cancer - 69.6%
+  Cardiovascular Disease - 59.2%
+  Diabetes - 51.4%</span>
+</div>
+
+</body>
+</html>
+<!--OR--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">OR
+  <span class="tooltiptext">Arthritis - 33.9%
+  Asthma - 41.2%
+  Cancer - 73.1%
+  Cardiovascular Disease - 52.2%
+  Diabetes - 46.3%</span>
+</div>
+
+</body>
+</html>
+<!--PA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">PA
+  <span class="tooltiptext">Arthritis - 37%
+  Asthma - 42.8%
+  Cancer - 72.7%
+  Cardiovascular Disease - 58.9%
+  Diabetes - 45.8%</span>
+</div>
+
+</body>
+</html>
+<!--RI--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">RI
+  <span class="tooltiptext">Arthritis - 36.5%
+  Asthma - 49.5%
+  Cancer - 74.8%
+  Cardiovascular Disease - 57%
+  Diabetes - 48.7%</span>
+</div>
+
+</body>
+</html>
+<!--SC--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">SC
+  <span class="tooltiptext">Arthritis - 39.2%
+  Asthma - 42.5%
+  Cancer - 71.8%
+  Cardiovascular Disease - 55.4%
+  Diabetes - 43.1%</span>
+</div>
+
+</body>
+</html>
+<!--SD--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">SD
+  <span class="tooltiptext">Arthritis - 36.4%
+  Asthma - 43.3%
+  Cancer - 72.3%
+  Cardiovascular Disease - 63%
+  Diabetes - 58.8%</span>
+</div>
+
+</body>
+</html>
+<!--TN--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">TN
+  <span class="tooltiptext">Arthritis - 37.3%
+  Asthma - 41.3%
+  Cancer - 73.7%
+  Cardiovascular Disease - 57.5%
+  Diabetes - 58.8</span>
+</div>
+
+</body>
+</html>
+<!--TX--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">TX
+  <span class="tooltiptext">Arthritis - 42.4%
+  Asthma - 42.7%
+  Cancer - 68.5%
+  Cardiovascular Disease - 51%
+  Diabetes - 49.7%</span>
+</div>
+
+</body>
+</html>
+<!--UT--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">UT
+  <span class="tooltiptext">Arthritis - 30.4%
+  Asthma - 41.6%
+  Cancer - 71.3%
+  Cardiovascular Disease - 56.9%
+  Diabetes - 44.7%</span>
+</div>
+
+</body>
+</html>
+<!--VT--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">VT
+  <span class="tooltiptext">Arthritis - 33.3%
+  Asthma - 49.1%
+  Cancer - 73.1%
+  Cardiovascular Disease - 54.7%
+  Diabetes - 49.5%</span>
+</div>
+
+</body>
+</html>
+<!--VA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">VA
+  <span class="tooltiptext">Arthritis - 35.1%
+  Asthma - 44.1%
+  Cancer - 75.5%
+  Cardiovascular Disease - 57.8%
+  Diabetes - 54.6%</span>
+</div>
+
+</body>
+</html>
+<!--WA--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">WA
+  <span class="tooltiptext">Arthritis - 30.6%
+  Asthma - 41.3%
+  Cancer - 73%
+  Cardiovascular Disease - 62.1%
+  Diabetes - 44.4%</span>
+</div>
+
+</body>
+</html>
+<!--WV--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">WV
+  <span class="tooltiptext">Arthritis - 44.4%
+  Asthma - 45.7%
+  Cancer - 74.8%
+  Cardiovascular Disease - 63%
+  Diabetes - 47.4%</span>
+</div>
+
+</body>
+</html>
+<!--WI--->
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">WI
+  <span class="tooltiptext">Arthritis - 33%
+  Asthma - 38.7%
+  Cancer - 76.7%
+  Cardiovascular Disease - 53.3%
+  Diabetes - 54.6%</span>
+</div>
+
+</body>
+</html>
+
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+<body style="text-align:center;">
+
+<div class="tooltip">WY
+  <span class="tooltiptext">Arthritis - 38.1%
+  Asthma - 38.2%
+  Cancer - 64.6%
+  Cardiovascular Disease - 56.6%
+  Diabetes - 51%</span>
+</div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+.container {
+  width: 100%;
+  background-color: #ddd;
+}
+
+.skills {
+  text-align: right;
+  padding: 10px;
+  color: white;
+}
+
+.html {width: 35.9%; background-color: #aa2218;}
+.css {width: 48%; background-color: #a0d05e;}
+.js {width: 72.4%; background-color: #a3c4e1;}
+.php {width: 57%; background-color: #663598;}
+.bootstrap {width: 47%; background-color: #f2b1f9;}
+</style>
+</head>
+<body>
+
+<br><br><br><h1>Common Diseases in the USA</h1>
+
+<p>Arthritis</p>
+<div class="container">
+  <div class="skills html">35.9%</div>
+</div>
+
+<p>Asthma</p>
+<div class="container">
+  <div class="skills css">48%</div>
+</div>
+
+<p>Cancer</p>
+<div class="container">
+  <div class="skills js">72.4%</div>
+</div>
+
+<p>Cardiovascular</p>
+<div class="container">
+  <div class="skills php">57%</div>
+</div>
+
+<p>Diabetes</p>
+<div class="container">
+  <div class="skills bootstrap">47%</div>
+</div>
+
+</body>
+</html>
+
+<h5>Created by Shyla Bisht, Medha Gaddam, Tanisha Pagadala, and Samhita Vinay (2019)</h5>
+</div>
